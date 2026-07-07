@@ -1,82 +1,82 @@
-import {createSlice} from "@reduxjs/toolkit"
+import { createSlice } from "@reduxjs/toolkit"
 
-const initialSlice = {
-    restaurants:[],
-    count:0,
-    loading:false,
-    error:null,
-    showVegOnly:false,
-    pureVegRestaurantsCount:0,
-    creating:false,
-    createError:null,
-    deleting:false,
-    deleteError:null
+const initialState = {
+    restaurants: [],
+    count: 0,
+    loading: false,
+    error: null,
+    showVegOnly: false,
+    pureVegRestaurantsCount: 0,
+    creating: false,
+    createError: null,
+    deleting: false,
+    deleteError: null
 }
 
-const restaurantSlice = ({
+const restaurantSlice = createSlice({
     name: "restaurants",
     initialState,
     reducers: {
         //get
-        getRestaurantsRequest:(state)=>{
+        getRestaurantsRequest: (state) => {
             state.loading = true
         },
-        getRestaurantsSuccess:(state,action)=>{
+        getRestaurantsSuccess: (state, action) => {
             state.loading = false,
-            state.restaurants = action.payload.restaurants,
-            state.count = action.payload.count
+                state.restaurants = action.payload.restaurants,
+                state.count = action.payload.count
         },
-        getRestaurantsFail:(state,action)=>{
+        getRestaurantsFail: (state, action) => {
             state.loading = false,
-            state.error = action.payload
+                state.error = action.payload
         },
         //create
-        createRestaurantRequest:(state)=>{
+        createRestaurantRequest: (state) => {
             state.creating = true
         },
-        createRestaurantSuccess:(state,action)=>{
+        createRestaurantSuccess: (state, action) => {
             state.creating = false,
-            state.restaurants.push(action.payload),
-            state.count +=1
+                state.restaurants.push(action.payload),
+                state.count += 1
         },
-        createRestaurantFail:(state,action)=>{
+        createRestaurantFail: (state, action) => {
             state.creating = false,
-            state.createError = action.payload
+                state.createError = action.payload
         },
         //delete
-        deleteRestaurantRequest:(state)=>{
+        deleteRestaurantRequest: (state) => {
             state.deleting = true
         },
-        deleteRestaurantSuccess:(state,action)=>{
+        deleteRestaurantSuccess: (state, action) => {
             state.deleting = false,
-            state.restaurants = state.restaurants.filter(
-                (restaurant)=> restaurant._id !==action.payload
-            )
+                state.restaurants = state.restaurants.filter(
+                    (restaurant) => restaurant._id !== action.payload
+                )
             state.count -= 1
         },
-        deleteRestaurantFail:(state,action)=>{
+        deleteRestaurantFail: (state, action) => {
             state.deleting = false,
-            state.deleteError = action.payload
+                state.deleteError = action.payload
         },
         //sort by ratings
-        sortByRatings:(state)=>{
-            state.restaurants.sort((a,b)=> b.ratings - a.ratings)
+        sortByRatings: (state) => {
+            state.restaurants.sort((a, b) => b.ratings - a.ratings)
         },
         //sort by reviews
-        sortByReviews:(state)=>{
-            state.restaurants.sort((a,b)=> b.numOfReviews - a.numOfReviews)
+        sortByReviews: (state) => {
+            state.restaurants.sort((a, b) => b.numOfReviews - a.numOfReviews)
         },
         //Toggle
-        toggleVegOnly:(state)=>{
-            state.showVegOnly = ! state.showVegOnly
+        toggleVegOnly: (state) => {
+            state.showVegOnly = !state.showVegOnly
         },
-        clearError:(state)=>{
+        clearError: (state) => {
             state.error = null
         }
     }
 })
 
-export const{
+export const {
     getRestaurantsRequest,
     getRestaurantsSuccess,
     getRestaurantsFail,
@@ -91,9 +91,9 @@ export const{
 
     sortByRatings,
     sortByReviews,
-    
+
     toggleVegOnly,
     clearError
 } = restaurantSlice.actions
 
-export default restaurantSlice.reducers
+export default restaurantSlice.reducer

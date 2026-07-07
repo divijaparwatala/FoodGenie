@@ -1,70 +1,79 @@
-import {createSlice} from "@reduxjs/toolkit"
+import { createSlice } from "@reduxjs/toolkit"
 
 const initialState = {
-    user:null,
-    loading:false,
-    isAuthenticated:false,
-    error:null,
-    isUpdated:false,
-    message:null,
-    success:null
+    user: null,
+    loading: false,
+    isAuthenticated: false,
+    error: null,
+    isUpdated: false,
+    message: null,
+    success: null
 }
 
 const userSlice = createSlice({
-    name:"user",
+    name: "user",
     initialState,
-    reducers:{
+    reducers: {
         //login,register,load
-        userRequest:(state) =>{
+        userRequest: (state) => {
             state.loading = true,
-            state.isAuthenticated = false
+                state.isAuthenticated = false
         },
-        userSuccess:(state,action)=>{
+        userSuccess: (state, action) => {
             state.loading = false,
-            state.isAuthenticated = true,
-            state.user = action.payload
+                state.isAuthenticated = true,
+                state.user = action.payload
         },
-        userFail:(state,action)=>{
+        userFail: (state, action) => {
             state.loading = false,
-            state.isAuthenticated=false,
-            state.user = null,
-            state.error = action.payload
+                state.isAuthenticated = false,
+                state.user = null,
+                state.error = action.payload
         },
 
         //logout
-        logoutSuccess:(state)=>{
+        logoutSuccess: (state) => {
             state.loading = false,
-            state.isAuthenticated=false,
-            state.user = null
+                state.isAuthenticated = false,
+                state.user = null
         },
-        logoutFail:(state,action)=>{
+        logoutFail: (state, action) => {
             state.error = action.payload
         },
 
         //update profile
-        updateRequest:(state)=>{
+        updateRequest: (state) => {
             state.loading = true
         },
-        updateSuccess:(state,action)=>{
+        updateSuccess: (state, action) => {
             state.loading = false,
-            state.isUpdated=action.payload
+                state.isUpdated = action.payload
         },
-        updateFail:(state,action)=>{
+        updateFail: (state, action) => {
             state.loading = false,
-            state.error=action.payload
+                state.error = action.payload
         },
-        updateReset:(state)=>{
-            state.isUpdated=false
+        updateReset: (state) => {
+            state.isUpdated = false
         },
 
-        clearErrors:(state)=>{
-            state.error=null
+        clearErrors: (state) => {
+            state.error = null
         }
     }
 })
 
-export const{
-    userRequest,userSuccess,userFail,logoutSuccess,logoutFail,updateRequest,updateSuccess,updateFail,updateReset,clearErrors
-}= userSlice.actions;
+export const {
+    userRequest,
+    userSuccess,
+    userFail,
+    logoutSuccess,
+    logoutFail,
+    updateRequest,
+    updateSuccess,
+    updateFail,
+    updateReset,
+    clearErrors
+} = userSlice.actions;
 
-export default userSlice.reducers;
+export default userSlice.reducer;

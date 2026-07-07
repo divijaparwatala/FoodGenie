@@ -1,48 +1,48 @@
-//store cart items and track the restaurant info....
-import {cartSlice} from "@reduxjs/toolkit";
+// store cart items and track the restaurant info
+import { createSlice } from "@reduxjs/toolkit";
 
-const initialState={
-    cartItems:[],
-    restaurant:{},
-    loading:false,
-    error:null
-}
+const initialState = {
+    cartItems: [],
+    restaurant: {},
+    loading: false,
+    error: null,
+};
 
 const cartSlice = createSlice({
-    name:"cart",
-     initialState,
-    reducers:{
-        cartRequest:(state)=>{
-            state.loading=true
+    name: "cart",
+    initialState,
+    reducers: {
+        cartRequest: (state) => {
+            state.loading = true;
         },
-        cartSuccess:(state,action)=>{
-            state.loading = false,
-            state.cartItems = action.payload.items,
-            state.restaurant = action.payload.restaurant
+        cartSuccess: (state, action) => {
+            state.loading = false;
+            state.cartItems = action.payload.items;
+            state.restaurant = action.payload.restaurant;
         },
-        cartFail:(state,action)=>{
-            state.loading = false,
-            state.error = action.payload
+        cartFail: (state, action) => {
+            state.loading = false;
+            state.error = action.payload;
         },
-        updateCartSuccess:(state,action)=>{
-            state.cartItems = action.payload.items
+        updateCartSuccess: (state, action) => {
+            state.cartItems = action.payload.items;
         },
-        removeCartSucces:(state,action)=>{
-            state.cartItems = action.payload?.cart?.items || null
+        removeCartSucces: (state, action) => {
+            state.cartItems = action.payload ? .cart ? .items || null;
         },
-        clearCart:(state)=>{
-            state.cartItems = []
+        clearCart: (state) => {
+            state.cartItems = [];
         },
-        clearErrors:(state)=>{
-            state.error=null
+        clearErrors: (state) => {
+            state.error = null;
         },
-        saveDeliveryInfo:(state,success)=>{
-            state.deliverInfo=action.payload
-        }
-    }
-})
+        saveDeliveryInfo: (state, action) => {
+            state.deliverInfo = action.payload;
+        },
+    },
+});
 
-export const{
+export const {
     cartRequest,
     cartSuccess,
     cartFail,
@@ -50,7 +50,7 @@ export const{
     removeCartSucces,
     clearCart,
     clearErrors,
-    saveDeliveryInfo
+    saveDeliveryInfo,
 } = cartSlice.actions;
 
-export default cartSlice.reducers;
+export default cartSlice.reducer;
