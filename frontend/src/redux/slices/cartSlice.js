@@ -28,7 +28,7 @@ const cartSlice = createSlice({
             state.cartItems = action.payload.items;
         },
         removeCartSucces: (state, action) => {
-            state.cartItems = action.payload ? .cart ? .items || null;
+            state.cartItems = action.payload?.cart?.items || null;
         },
         clearCart: (state) => {
             state.cartItems = [];

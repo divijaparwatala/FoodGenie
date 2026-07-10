@@ -10,7 +10,7 @@ const cloudinary = require("../config/cloudinary");
 exports.signup = catchAsyncErrors(async(req, res, next) => {
     const { name, email, password, passwordConfirm, phoneNumber } = req.body;
 
-    let avatar = []
+    let avatar = {}
         //avatar not provided
     if (!req.body.avatar || req.body.avatar === "/images/images.png") {
         avatar = {
@@ -18,14 +18,14 @@ exports.signup = catchAsyncErrors(async(req, res, next) => {
             url: "/images/images.png"
         }
     } else {
-        const result = await cloudinary.UploadStream(req.body.avatar, {
+        const result = await cloudinary.uploader.upload(req.body.avatar, {
             folder: "avatar",
             width: 150,
             crop: "scale",
         })
         avatar = {
             public_id: result.public_id,
-            url: result.url
+            url: result.secure_url
         }
     }
 
@@ -106,7 +106,7 @@ exports.protect = catchAsyncErrors(async(req, res, next) => {
         );
     }
 
-    if (currentUser.changedPasswordAfter(decoded.iat)) {
+    if (currentUser.changePasswordAfter(decoded.iat)) {
 
         return next(
             new ErrorHandler(

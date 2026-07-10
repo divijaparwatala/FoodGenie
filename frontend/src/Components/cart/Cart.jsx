@@ -9,6 +9,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faIndianRupee } from "@fortawesome/free-solid-svg-icons";
 import { payment } from "../../redux/actions/orderActions";
+import { clearErrors } from "../../redux/slices/orderSlice";
 import { toast } from "react-toastify"; 
 
 const Cart = () => {
@@ -16,10 +17,19 @@ const Cart = () => {
   const navigate = useNavigate();
 
   const { cartItems, restaurant } = useSelector((state) => state.cart);
+  const { isAuthenticated } = useSelector((state) => state.user);
+  const { loading, error } = useSelector((state) => state.order);
 
   useEffect(() => {
     dispatch(fetchCartItems());
   }, [dispatch]);
+
+  useEffect(() => {
+    if (error) {
+      toast.error(error);
+      dispatch(clearErrors());
+    }
+  }, [error, dispatch]);
 
   const removeCartItemHandler = (id) => {
     dispatch(removeItemFromCart(id));
@@ -45,8 +55,12 @@ const Cart = () => {
   };
 
   const checkoutHandler = () => {
+    if (!isAuthenticated) {
+      toast.error("Please login to checkout");
+      navigate("/users/login");
+      return;
+    }
     dispatch(payment(cartItems, restaurant));
-    // // navigate("/delivery");
   };
 
   return (
@@ -171,8 +185,9 @@ const Cart = () => {
                   id="checkout_btn"
                   className="btn btn-primary btn-block"
                   onClick={checkoutHandler}
+                  disabled={loading}
                 >
-                  Check Out
+                  {loading ? "Processing..." : "Check Out"}
                 </button>
               </div>
             </div>
