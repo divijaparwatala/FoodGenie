@@ -1,11 +1,6 @@
 const catchAsyncErrors = require("../middlewares/catchAsyncErrors");
-
-const dotenv = require("dotenv");
-dotenv.config({ path: "./config/config.env" });
-
-const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
-console.log("KEY", process.env.STRIPE_SECRET_KEY);
-
+const ErrorHandler = require("../utils/errorHandler");
+const stripe = require("../config/stripe");
 
 //process paymnet api
 exports.processPayment = catchAsyncErrors(async(req, res, next) => {
