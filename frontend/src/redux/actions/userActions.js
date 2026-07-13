@@ -41,7 +41,7 @@ export const loadUser = () => async(dispatch) => {
             const { data } = await api.get("v1/users/me");
             dispatch(userSuccess(data.user));
         } catch (error) {
-            dispatch(userFail(error.response?.data?.message || "Failed to load user"));
+            dispatch(userFail(error.response?.data?.message ));
         }
     }
     //update profile

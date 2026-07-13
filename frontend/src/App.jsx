@@ -20,7 +20,6 @@ import Cart from "./components/cart/Cart";
 import OrderSuccess from "./components/cart/OrderSuccess";
 import ListOrders from "./components/order/ListOrders";
 import OrderDetails from "./components/order/OrderDetails";
-
 function App() {
   useEffect(() => {
     store.dispatch(loadUser());
@@ -59,6 +58,7 @@ function App() {
               <Route path="/success" element={<OrderSuccess />} />
               <Route path="/eats/orders/me/myOrders" element={<ListOrders />} />
               <Route path="/eats/orders/:id" element={<OrderDetails />} />
+              
             </Routes>
           </div>
           <Footer />

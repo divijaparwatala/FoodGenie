@@ -1,11 +1,6 @@
 const catchAsyncErrors = require("../middlewares/catchAsyncErrors");
-
-const dotenv = require("dotenv");
-dotenv.config({ path: "./config/config.env" });
-
-const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
-console.log("KEY", process.env.STRIPE_SECRET_KEY);
-
+const ErrorHandler = require("../utils/errorHandler");
+const stripe = require("../config/stripe");
 
 //process paymnet api
 exports.processPayment = catchAsyncErrors(async(req, res, next) => {
@@ -43,8 +38,13 @@ exports.processPayment = catchAsyncErrors(async(req, res, next) => {
     });
 
     console.log("Stripe line items:", JSON.stringify(lineItems, null, 2));
-
+    
+    console.log("User:", req.user);
+    console.log("Email:", req.user?.email);
+    console.log("Request Body:");
+    console.log(JSON.stringify(req.body, null, 2));
     //create stripe checkout session
+    try {
     const session = await stripe.checkout.sessions.create({
         customer_email: req.user.email,
         phone_number_collection: {
@@ -60,7 +60,7 @@ exports.processPayment = catchAsyncErrors(async(req, res, next) => {
                 display_name: "Delivery Charges",
                 type: "fixed_amount",
                 fixed_amount: {
-                    amount: 5500, //amount in paise (5500 => 55INR)
+                    amount: 5500,
                     currency: "inr",
                 },
                 delivery_estimate: {
@@ -74,11 +74,18 @@ exports.processPayment = catchAsyncErrors(async(req, res, next) => {
                     },
                 },
             },
-        }, ],
+        }],
         success_url: `${process.env.FRONTEND_URL}/success?session_id={CHECKOUT_SESSION_ID}`,
         cancel_url: `${process.env.FRONTEND_URL}/cart`,
     });
-    res.status(200).json({ url: session.url });
+
+    return res.status(200).json({ url: session.url });
+
+} catch (err) {
+    console.error("Stripe Error:");
+    console.error(err);
+    return next(new ErrorHandler(err.message, 500));
+}
 })
 
 //send stripe api key

@@ -22,6 +22,7 @@
         "express-fileupload": "^1.5.0",
         "html-to-text": "^10.0.0",
         "jsonwebtoken": "^9.0.3",
+        "latest-package-version": "^1.0.3",
         "mongoose": "^9.6.3",
         "nodemailer": "^9.0.3",
         "stripe": "^14.0.0",

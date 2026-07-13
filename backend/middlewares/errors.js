@@ -24,7 +24,13 @@
 
 
 const ErrorHandler = require("../utils/errorHandler");
+module.exports = (err, req, res, next) => {
 
+    console.error("========== ERROR ==========");
+    console.error(err);
+    console.error("===========================");
+
+    err.statusCode = err.statusCode || 500;}
 module.exports = (err, req, res, next) => {
     // if statusCode does not exist then 500 will be taken as error code ->internal server error
     err.statusCode = err.statusCode || 500;
@@ -63,13 +69,13 @@ module.exports = (err, req, res, next) => {
         // Handling wrong JWT error
         if (err.name === "JsonWebTokenError") {
             const message = "JSON Web Token is invalid. Try Again!!!";
-            error = new ErrorHandler(message, 400);
+            error = new ErrorHandler(message, 401);
         }
 
         // Handling Expired JWT error
         if (err.name === "TokenExpiredError") {
             const message = "JSON Web Token is expired. Try Again!!!";
-            error = new ErrorHandler(message, 400);
+            error = new ErrorHandler(message, 401);
         }
 
         res.status(error.statusCode).json({

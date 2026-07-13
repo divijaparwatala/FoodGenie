@@ -23,7 +23,7 @@ const Search = () => {
           type="text"
           id="search_field"
           className="form-control"
-          placeholder="Search Your Favorite Reataurant...."
+          placeholder="Search Your Favorite Reataurant"
           onChange={(e) => setKeyword(e.target.value)}
         />
 

@@ -5,7 +5,8 @@ const ErrorHandler = require("../utils/errorHandler");
 const catchAsyncErrors = require("../middlewares/catchAsyncErrors");
 const sendToken = require("../utils/jwtToken");
 const cloudinary = require("../config/cloudinary");
-
+const jwt = require("jsonwebtoken");
+const { promisify } = require("util");
 //Signup
 exports.signup = catchAsyncErrors(async(req, res, next) => {
     const { name, email, password, passwordConfirm, phoneNumber } = req.body;
@@ -72,7 +73,7 @@ exports.login = catchAsyncErrors(async(req, res, next) => {
 
 // Protect Route
 exports.protect = catchAsyncErrors(async(req, res, next) => {
-
+    console.log("=== PROTECT MIDDLEWARE ===");
     let token;
 
     if (
@@ -83,7 +84,7 @@ exports.protect = catchAsyncErrors(async(req, res, next) => {
     } else if (req.cookies.jwt) {
         token = req.cookies.jwt;
     }
-
+    console.log("Token:", token);
     if (!token) {
         return next(
             new ErrorHandler(
@@ -94,9 +95,10 @@ exports.protect = catchAsyncErrors(async(req, res, next) => {
     }
 
     const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
+    console.log("Decoded:", decoded);
 
     const currentUser = await User.findById(decoded.id);
-
+    console.log("Current User:", currentUser);
     if (!currentUser) {
         return next(
             new ErrorHandler(

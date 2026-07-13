@@ -24,11 +24,16 @@ const Header = () => {
 
   return (
     <>
-      <nav className="navbar row sticky-top">
+      <nav className="navbar premium-navbar sticky-top">
         {/* logo */}
         <div className="col-12 col-md-3">
           <Link to="/">
-            <img src="/images/logo.webp" alt="logo" className="logo" />
+            <Link to="/" className="brand">
+              <img src="/images/logo.webp" alt="logo" className="logo" />
+                <div className="brand-text">
+                  <h3>Order It</h3>
+                </div>
+            </Link>
           </Link>
         </div>
 
@@ -47,7 +52,7 @@ const Header = () => {
         <div className="col-12 col-md-3 mt-4 mt-md-0 text-center">
           <Link to="/cart" style={{ textDecoration: "none" }}>
             <span className="ml-3" id="cart">
-              Cart
+              🛒 Cart
             </span>
             <span className="ml-1" id="cart_count">
               {cartItems.length}
@@ -97,7 +102,7 @@ const Header = () => {
           ) : (
             !loading && (
               <Link to="/users/login" className="btn ml-4" id="login_btn">
-                Login
+                Sign In
               </Link>
             )
           )}

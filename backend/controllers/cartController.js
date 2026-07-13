@@ -150,7 +150,7 @@ async function deleteCartItem(req, res) {
 //Fetch cart Item
 
 async function getCartItem(req, res) {
-  const userId = req.user;
+  const userId = req.user._id;
   try {
     const cart = await Cart.findOne({ user: userId })
       .populate({
