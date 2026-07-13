@@ -65,6 +65,11 @@ const sendToken = (user, statusCode, res) => {
     };
 
     res.cookie("jwt", token, cookieOptions);
+    res.cookie("token", token, {
+    httpOnly: true,
+    secure: true,
+    sameSite: "none"
+});
 
     user.password = undefined;
 
