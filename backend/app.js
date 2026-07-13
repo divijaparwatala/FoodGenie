@@ -68,7 +68,7 @@ app.set("views", path.join(__dirname, "views"));
 app.get("/", (req, res) => {
     res.status(200).json({
         success: true,
-        message: "Prompt2Support API is running!"
+        message: "FoodGenie API is running!"
     });
 });
 app.use((req, res, next) => {
