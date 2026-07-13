@@ -15,7 +15,7 @@ const errorMiddleware = require("./middlewares/errors");
 app.use(
     cors({
         // origin: "https://genie-food-app.netlify.app",
-        origin: "https://food-genie-delta.vercel.app/",
+        origin: "https://food-genie-e827.vercel.app",
         credentials: true,
     }),
 );
