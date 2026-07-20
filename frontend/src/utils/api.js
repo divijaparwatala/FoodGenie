@@ -3,7 +3,7 @@
 import axios from "axios";
 import qs from "qs";
 console.log("ENV:",
-    import.meta.env.VITE_API_URL);
+    import.meta.env.VITE_API_URL || https://foodgenie-ah6z.onrender.com);
 const api = axios.create({
     baseURL: (
         import.meta.env.VITE_API_URL ) + "/api",
