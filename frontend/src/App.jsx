@@ -31,7 +31,7 @@ function App() {
       <Router>
         <div className="App">
           <Header />
-          <div className="container container-fluids">
+          <div className="container-fluid">
             <Routes>
               <Route path="/" element={<Home />} exact />
               <Route
